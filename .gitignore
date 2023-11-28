@@ -1,0 +1,11 @@
+node_modules
+*.db
+
+chet
+
+dist/
+!chet/
+
+/gh.yml
+.litefs.token
+.env.yml
