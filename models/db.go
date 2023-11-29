@@ -81,13 +81,14 @@ func Connect(fn string) (*gorm.DB, error) {
 		return nil, err
 	}
 	err = db.AutoMigrate(&Record{}, &LocalConfig{})
+
 	return db, err
 }
 
 func (dsn *DSN) String() string {
 	return fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s port=%d sslmode=disable",
-		dsn.Host, dsn.User, dsn.Password, dsn.DBName, dsn.Port,
+		"host=%s user=%s password=%s dbname=%s port=%d sslmode=%s",
+		dsn.Host, dsn.User, dsn.Password, dsn.DBName, dsn.Port, dsn.SSLMode,
 	)
 }
 
@@ -114,11 +115,17 @@ func NewDSN(dburi string) (*DSN, error) {
 
 	dbname := path[0]
 
+	sslmode := url.Query().Get("sslmode")
+	if sslmode == "" {
+		sslmode = "disable"
+	}
+
 	return &DSN{
 		Host:     url.Hostname(),
 		User:     url.User.Username(),
 		Password: pw,
 		DBName:   dbname,
 		Port:     port,
+		SSLMode:  sslmode,
 	}, nil
 }
