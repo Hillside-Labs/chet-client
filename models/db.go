@@ -42,26 +42,6 @@ func (lc LocalConfig) String() {
 	fmt.Printf("LocalConfig:%+v\n", lc)
 }
 
-type User struct {
-	gorm.Model
-	Name     string `json:"name"`
-	Email    string `gorm:"unique" json:"email"`
-	Password string `json:"password"`
-	Role     string `json:"role"`
-}
-
-func (u User) String() string {
-	return fmt.Sprintf("User:{ID: %d, Name: %s, Email: %s, Role: %s}\n", u.ID, u.Name, u.Email, u.Role)
-}
-
-type Client struct {
-	ClientID     string `gorm:"unique;primarykey"`
-	ClientSecret string `gorm:"unique"`
-	Name         string
-	UserID       uint
-	User         User
-}
-
 type DSN struct {
 	Host     string
 	User     string
@@ -69,10 +49,6 @@ type DSN struct {
 	DBName   string
 	Port     int
 	SSLMode  string
-}
-
-func (c Client) String() string {
-	return fmt.Sprintf("Client:{ClientID: %s, ClientSecret: %s, Name: %s, UserID: %d, User:{%s}", c.ClientID, c.ClientSecret, c.Name, c.UserID, c.User.String())
 }
 
 func Connect(fn string) (*gorm.DB, error) {
