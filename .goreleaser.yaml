@@ -49,7 +49,7 @@ archives:
 release:
   github:
     owner: Hillside-Labs
-    name: chet
+    name: chet-client
 
   prerelease: auto
 
